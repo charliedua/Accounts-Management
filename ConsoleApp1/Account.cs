@@ -164,23 +164,17 @@ namespace Bank
 
 			using (StreamReader r = new StreamReader(path))
 			{
-				string json = r.ReadToEnd();
-				JObject obj = new JObject();
-				obj = JObject.Parse(json);
-				JArray SavingsArray = new JArray();
-				JArray CheckingArray = new JArray();
-				SavingsArray = (JArray)obj["Savings"];
-				CheckingArray = (JArray)obj["Checking"];
+				JObject obj = JObject.Parse(r.ReadToEnd());
+				JArray SavingsArray = (JArray)obj["Savings"];
+				JArray CheckingArray = (JArray)obj["Checking"];
 				for (int i = 0; i < SavingsArray.Count; i++)
 				{
-					SavingsAccount account = new SavingsAccount();
-					account = JsonConvert.DeserializeObject<SavingsAccount>(SavingsArray[i].ToString());
+					SavingsAccount account = JsonConvert.DeserializeObject<SavingsAccount>(SavingsArray[i].ToString());
 					accounts.Add(account);
 				}
 				for (int i = 0; i < CheckingArray.Count; i++)
 				{
-					CheckingAccount account = new CheckingAccount();
-					account = JsonConvert.DeserializeObject<CheckingAccount>(CheckingArray[i].ToString());
+					CheckingAccount account = JsonConvert.DeserializeObject<CheckingAccount>(CheckingArray[i].ToString());
 					accounts.Add(account);
 				}
 			}
@@ -193,23 +187,17 @@ namespace Bank
 
 			using (StreamReader r = new StreamReader(path))
 			{
-				string json = r.ReadToEnd();
-				JObject obj = new JObject();
-				obj = JObject.Parse(json);
-				JArray SavingsArray = new JArray();
-				JArray CheckingArray = new JArray();
-				SavingsArray = (JArray)obj["Savings"];
-				CheckingArray = (JArray)obj["Checking"];
+				JObject obj = JObject.Parse(r.ReadToEnd());
+				JArray SavingsArray = (JArray)obj["Savings"];
+				JArray CheckingArray = (JArray)obj["Checking"];
 				for (int i = 0; i < SavingsArray.Count; i++)
 				{
-					SavingsAccount account = new SavingsAccount();
-					account = JsonConvert.DeserializeObject<SavingsAccount>(SavingsArray[i].ToString());
+					SavingsAccount account = JsonConvert.DeserializeObject<SavingsAccount>(SavingsArray[i].ToString());
 					accounts.Add(account);
 				}
 				for (int i = 0; i < CheckingArray.Count; i++)
 				{
-					CheckingAccount account = new CheckingAccount();
-					account = JsonConvert.DeserializeObject<CheckingAccount>(CheckingArray[i].ToString());
+					CheckingAccount account = JsonConvert.DeserializeObject<CheckingAccount>(CheckingArray[i].ToString());
 					accounts.Add(account);
 				}
 			}
