@@ -222,6 +222,8 @@ namespace Bank
 
 		public void ProcessLoan()
 		{
+			// TODO: add a system for time/duration
+			// TODO: ask for ID proof before loan
 			bool result = false;
 			if (hasLoan)
 			{
