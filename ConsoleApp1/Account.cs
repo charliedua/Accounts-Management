@@ -10,7 +10,7 @@ using TerminalUserInput;
 
 namespace Bank
 {
-	public abstract class Account
+	public internal class Account
 	{
 		public int AccountID { get; set; }
 
