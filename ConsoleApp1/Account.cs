@@ -138,6 +138,8 @@ namespace Bank
 					if (account is SavingsAccount savingsAccount)
 					{
 						SavingsData.Append(JsonConvert.SerializeObject(savingsAccount));
+						// TODO: Fix linq query.
+						//var a = from accounts where (account is SavingsAccount) select account;
 						SavingsData.Append(",");
 					}
 					else if (account is CheckingAccount checkingAccount)
@@ -220,7 +222,7 @@ namespace Bank
 		public decimal IntrestRate { get; set; }
 		public SavingsAccount() : base()
 		{
-
+			;
 		}
 
 		public override void Create(int account_id)
