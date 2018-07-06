@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using TerminalUserInput;
@@ -180,6 +181,7 @@ namespace Bank
 					accounts.Add(account);
 				}
 			}
+			accounts = (from account in accounts orderby account.AccountID select account).ToList();
 
 			return accounts;
 		}
