@@ -10,7 +10,7 @@ using TerminalUserInput;
 
 namespace Bank
 {
-	internal class Account
+	public abstract class Account
 	{
 		public int AccountID { get; set; }
 
@@ -33,6 +33,8 @@ namespace Bank
 		}
 
 		private decimal _Balance;
+		private bool hasLoan = false;
+
 		public decimal Balance
 		{
 			get => _Balance;
@@ -216,6 +218,33 @@ namespace Bank
 			str.AppendLine($"Balance : {Balance.ToString():C2}");
 			str.AppendLine($"Account ID : {AccountID.ToString()}");
 			return str.ToString();
+		}
+
+		public void ProcessLoan()
+		{
+			bool result = false;
+			if (hasLoan)
+			{
+				decimal amount = TUI.ReadDecimal("Please Enter What amount of loan would you like : ");
+				if (Balance > amount)
+				{
+					Balance += amount;
+					Console.WriteLine("Loan Successfully Initiated!");
+					Console.WriteLine($"This is your balance now {Balance:C2}");
+					result = true;
+				}
+				else
+				{
+					Console.WriteLine("Please Check your balance");
+					Console.WriteLine($"This is your balance {Balance:C2}");
+					Console.WriteLine($"This is your amount {amount:C2}");
+				} 
+			}
+			else
+				Console.WriteLine("You already have a loan, only one loan provided!");
+			if (!result)
+				Console.WriteLine("Loan could not be processed");
+
 		}
 	}
 
