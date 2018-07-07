@@ -189,7 +189,7 @@ namespace Accounts
             Console.WriteLine("4. check balance");
             Console.WriteLine("5. Widraw");
             Console.WriteLine("6. View Account");
-            Console.WriteLine("7. Quit");
+            Console.WriteLine("8. Quit");
         }
 
 		// TODO: Add a system for loan
