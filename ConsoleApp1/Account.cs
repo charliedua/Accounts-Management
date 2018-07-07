@@ -34,7 +34,7 @@ namespace Bank
 
 		private decimal _Balance;
 		public bool HasLoan { get; set; }
-		private Loan Loan { get; set; }
+		private Loan AccLoan { get; set; }
 
 		public decimal Balance
 		{
@@ -224,7 +224,8 @@ namespace Bank
 
 		public void InitiateLoan()
 		{
-			Loan.Process(this);
+			AccLoan = new Loan();
+			AccLoan.Process(this);
 		}
 
 	}

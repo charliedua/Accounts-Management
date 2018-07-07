@@ -166,18 +166,27 @@ namespace Accounts
 							Console.WriteLine(errormsg);
 						break;
 					case 7:
-						if (account is SavingsAccount savingsAccount)
+						if (accountSelected)
 						{
-							Console.WriteLine($"{savingsAccount.CalculateIntrest():C2}");
+							if (account is SavingsAccount savingsAccount)
+								Console.WriteLine($"{savingsAccount.CalculateIntrest():C2}");
 						}
+						else
+							Console.WriteLine(errormsg);
 						break;
 					case 8:
+						if (accountSelected)
+							account.InitiateLoan();
+						else
+							Console.WriteLine(errormsg);
+						break;
+					case 9:
 						break;
 					default:
 						Console.WriteLine("Woops! That didn't work.");
 						break;
 				}
-			} while (input != 8);
+			} while (input != 9);
 		}
 
         private static void DisplayMenu()
@@ -189,7 +198,8 @@ namespace Accounts
             Console.WriteLine("4. check balance");
             Console.WriteLine("5. Widraw");
             Console.WriteLine("6. View Account");
-            Console.WriteLine("8. Quit");
+            Console.WriteLine("8. Take Loan");
+            Console.WriteLine("9. Quit");
         }
 
 		// TODO: Add a system for loan
@@ -206,7 +216,8 @@ namespace Accounts
 			{
 				Console.WriteLine("7. Calculate intrest");
 			}
-			Console.WriteLine("8. Quit");
+			Console.WriteLine("8. Take Loan");
+			Console.WriteLine("9. Quit");
 		}
 	}
 }
