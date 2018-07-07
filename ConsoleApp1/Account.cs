@@ -34,7 +34,7 @@ namespace Bank
 
 		private decimal _Balance;
 		public bool HasLoan { get; set; }
-		private Loan AccLoan { get; set; }
+		public Loan AccLoan { get; set; }
 
 		public decimal Balance
 		{
