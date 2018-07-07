@@ -1,7 +1,5 @@
 {
     "dependencies": {
-        "Newtonsoft.Json": "*"
-    },
-    "name": "Accounts Management"
-    
+        "Newtonsoft.Json": "11.0.2"
+    }
 }
