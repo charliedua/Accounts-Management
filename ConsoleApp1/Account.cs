@@ -143,14 +143,25 @@ namespace Bank
 					if (account is SavingsAccount savingsAccount)
 					{
 						SavingsData.Append(JsonConvert.SerializeObject(savingsAccount));
-						// TODO: Fix linq query.
-						//var a = from accounts where (account is SavingsAccount) select account;
-						SavingsData.Append(",");
+
+						int elementCount = (from _account in accounts
+											where (_account is SavingsAccount)
+											select account).Count();
+						if (elementCount > savingsAccount.AccountID)
+						{
+							SavingsData.Append(",");
+						}
 					}
 					else if (account is CheckingAccount checkingAccount)
 					{
 						CheckingData.Append(JsonConvert.SerializeObject(checkingAccount));
-						CheckingData.Append(",");
+						int elementCount = (from _account in accounts
+											where (_account is CheckingAccount)
+											select account).Count();
+						if (elementCount > checkingAccount.AccountID)
+						{
+							CheckingData.Append(",");
+						}
 					}
 				}
 				SavingsData.Append("],");
@@ -171,18 +182,22 @@ namespace Bank
 
 			using (StreamReader r = new StreamReader(path))
 			{
-				JObject obj = JObject.Parse(r.ReadToEnd());
-				JArray SavingsArray = (JArray)obj["Savings"];
-				JArray CheckingArray = (JArray)obj["Checking"];
-				for (int i = 0; i < SavingsArray.Count; i++)
+				string data = r.ReadToEnd();
+				if (data.Length > 0)
 				{
-					SavingsAccount account = JsonConvert.DeserializeObject<SavingsAccount>(SavingsArray[i].ToString());
-					accounts.Add(account);
-				}
-				for (int i = 0; i < CheckingArray.Count; i++)
-				{
-					CheckingAccount account = JsonConvert.DeserializeObject<CheckingAccount>(CheckingArray[i].ToString());
-					accounts.Add(account);
+					JObject obj = JObject.Parse(data);
+					JArray SavingsArray = (JArray)obj["Savings"];
+					JArray CheckingArray = (JArray)obj["Checking"];
+					for (int i = 0; i < SavingsArray.Count; i++)
+					{
+						SavingsAccount account = JsonConvert.DeserializeObject<SavingsAccount>(SavingsArray[i].ToString());
+						accounts.Add(account);
+					}
+					for (int i = 0; i < CheckingArray.Count; i++)
+					{
+						CheckingAccount account = JsonConvert.DeserializeObject<CheckingAccount>(CheckingArray[i].ToString());
+						accounts.Add(account);
+					}
 				}
 			}
 			accounts = (from account in accounts orderby account.AccountID select account).ToList();

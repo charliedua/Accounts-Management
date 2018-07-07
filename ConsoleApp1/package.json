@@ -1,5 +1,7 @@
 {
     "dependencies": {
         "Newtonsoft.Json": "*"
-    }
+    },
+    "name": "Accounts Management"
+    
 }

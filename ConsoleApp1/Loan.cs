@@ -5,12 +5,7 @@ namespace Bank
 {
 	public class Loan
 	{
-		private decimal _Amount;
-		public decimal Amount
-		{
-			get => (decimal)((DateTime.Now - DateIssued).TotalDays * Rate) + _Amount;
-			private set => _Amount = value;
-		}
+		public decimal Amount { get; set; }
 		public int Days { get; private set; }
 		public int Rate { get; private set; }
 		public DateTime DateIssued { get; private set; }

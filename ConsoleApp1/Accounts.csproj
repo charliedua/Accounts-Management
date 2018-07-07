@@ -74,6 +74,9 @@
     <Compile Include="TerminalUserInput.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Documents\accountinfo.dat">
+      <Link>accountinfo.dat</Link>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
