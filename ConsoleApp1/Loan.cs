@@ -7,16 +7,16 @@ namespace Bank
 	{
 		public decimal Amount { get; set; }
 		public int Days { get; set; }
-		public int Rate { get; set; }
+		public decimal Rate { get; set; }
 		public DateTime DateIssued { get; set; }
 		public DateTime DateExpire => DateIssued.AddDays(Days);
+		public int Installments { get; set; }
+		public decimal AmountPerInstallment { get; set; }
 
 		// returns the status after processsing
 		public void Process(Account account)
 		{
 			{ 
-				// TODO: add a system for time/duration
-				// TODO: ask for ID proof before loan
 				bool result = false;
 				string reason = "";
 				if (!account.HasLoan)
@@ -24,8 +24,9 @@ namespace Bank
 					Amount = TUI.ReadDecimal("Please Enter What amount of loan would you like : ");
 					Days = TUI.ReadInteger("For How many Days: ");
 					Rate = TUI.ReadInteger("The intrest rate from the chart: ");
-					bool verified = TUI.ReadInteger("Please Enter Your unique accountID: ") == account.AccountID;
-					if (!verified)
+					Installments = TUI.ReadIntegerRange(3,10,"How many installments would you like? (3-10): ");
+					AmountPerInstallment = ((Rate * Days) + Amount)/ Installments;
+					if (!(TUI.ReadInteger("Please Enter Your unique accountID for verification: ") == account.AccountID))
 					{
 						reason = "Verification Error";
 					}
@@ -38,6 +39,7 @@ namespace Bank
 							DateIssued = DateTime.Now;
 							Console.WriteLine("Loan Successfully Initiated!");
 							Console.WriteLine($"This is your balance now {account.Balance:C2}");
+							Console.WriteLine($"The Loan is due on: {DateExpire.ToShortDateString()}");
 							result = true;
 						}
 						else
@@ -55,7 +57,7 @@ namespace Bank
 			}
 		}
 
-		public void UnProcess(Account account)
+		public void Complete(Account account)
 		{
 			string reason = "";
 			if (account.HasLoan)
