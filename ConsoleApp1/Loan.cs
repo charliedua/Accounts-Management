@@ -6,9 +6,9 @@ namespace Bank
 	public class Loan
 	{
 		public decimal Amount { get; set; }
-		public int Days { get; private set; }
-		public int Rate { get; private set; }
-		public DateTime DateIssued { get; private set; }
+		public int Days { get; set; }
+		public int Rate { get; set; }
+		public DateTime DateIssued { get; set; }
 		public DateTime DateExpire => DateIssued.AddDays(Days);
 
 		// returns the status after processsing
@@ -53,6 +53,29 @@ namespace Bank
 				if (!result)
 						Console.WriteLine($"Loan Couldn't be processed please try again, reason: {reason}.");
 			}
+		}
+
+		public void UnProcess(Account account)
+		{
+			string reason = "";
+			if (account.HasLoan)
+			{
+				if ((account.AccLoan.Days * account.AccLoan.Rate) + account.AccLoan.Amount > account.Balance)
+				{
+					account.HasLoan = false;
+					account.AccLoan = null;
+					Console.WriteLine("Your loan has been unprocessed");
+				}
+				else
+				{
+					reason = "Insufficient Funds";
+				}
+			}
+			else
+			{
+				reason = "Don't have a loan";
+			}
+			Console.WriteLine($"The actions could not be performed due to the following reasons: {reason}");
 		}
 	}
 }

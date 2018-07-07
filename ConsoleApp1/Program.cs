@@ -28,7 +28,6 @@ namespace Accounts
 
 		private static void WriteAccounts(List<Account> accounts) => Account.Save(accounts);
 
-		// TODO: Add a system for loan
 		private static void HandleAccounts(List<Account> accounts, bool accountsCreated = false)
 		{
 			int input;
@@ -202,7 +201,6 @@ namespace Accounts
             Console.WriteLine("9. Quit");
         }
 
-		// TODO: Add a system for loan
 		private static void DisplayMenu(Account account)
 		{
 			Console.WriteLine("Please enter a number as the menu");
