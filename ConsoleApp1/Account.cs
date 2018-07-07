@@ -243,6 +243,11 @@ namespace Bank
 			AccLoan.Process(this);
 		}
 
+		public void PayInstallments()
+		{
+			AccLoan.PayInstallments(this);
+		}
+
 	}
 
 	class SavingsAccount: Account

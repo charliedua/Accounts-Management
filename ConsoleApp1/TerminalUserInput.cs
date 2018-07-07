@@ -23,6 +23,7 @@ namespace TerminalUserInput
 			string input;
 			do
 			{
+				Console.Write("> ");
 				input = Console.ReadLine();
 			} while (!int.TryParse(input, out inputInt));
 
@@ -64,10 +65,48 @@ namespace TerminalUserInput
 			string input;
 			do
 			{
+				Console.Write("> ");
 				input = Console.ReadLine();
 			} while (!decimal.TryParse(input, out inputDec));
 
 			return inputDec;
+		}
+
+		public static bool ReadBool()
+		{
+			string input = "";
+			do
+			{
+				Console.Write("Enter Y/N> ");
+				input = Console.ReadLine();
+			} while (input == "Y" || input == "N" || input == "y" || input == "n");
+
+			if (input == "Y" || input == "y")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		public static bool ReadBool(string prompt)
+		{
+			string input = "";
+			do
+			{
+				Console.Write(prompt + "Enter Y/N> ");
+				input = Console.ReadLine();
+			} while (!(input == "Y" || input == "N" || input == "y" || input == "n"));
+
+			if (input == "Y" || input == "y")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }

@@ -175,7 +175,7 @@ namespace Accounts
 						break;
 					case 8:
 						if (accountSelected)
-							account.InitiateLoan();
+							HandleLoan(account);
 						else
 							Console.WriteLine(errormsg);
 						break;
@@ -214,8 +214,43 @@ namespace Accounts
 			{
 				Console.WriteLine("7. Calculate intrest");
 			}
-			Console.WriteLine("8. Take Loan");
+			Console.WriteLine("8. Loan Actions");
 			Console.WriteLine("9. Quit");
+		}
+
+		private static void DisplayLoanMenu(Account account)
+		{
+			Console.WriteLine("Please enter a number as the menu");
+			Console.WriteLine("1. Take Loan");
+			if (account.HasLoan)
+			{
+				Console.WriteLine("2. Pay Installments");
+			}
+			Console.WriteLine("3. Back");
+		}
+
+		private static void HandleLoan(Account account)
+		{
+			int input;
+			do
+			{
+				DisplayLoanMenu(account);
+				input = TUI.ReadInteger();
+				switch (input)
+				{
+					case 1:
+						account.InitiateLoan();
+						break;
+					case 2:
+						if (account.HasLoan)
+							account.PayInstallments();
+						break;
+					case 3:
+						break;
+					default:
+						break;
+				}
+			} while (input != 3);
 		}
 	}
 }
