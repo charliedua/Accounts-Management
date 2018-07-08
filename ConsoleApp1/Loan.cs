@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using TerminalUserInput;
 
 namespace Bank
@@ -58,7 +59,7 @@ namespace Bank
 				}
 				else
 					reason = "Loan Already Issued";
-				if (!result)
+				if (!(result && reason == ""))
 					Console.WriteLine($"Loan Couldn't be processed please try again, reason: {reason}.");
 			}
 		}
@@ -141,6 +142,17 @@ namespace Bank
 			{
 				Console.WriteLine("Installments Successfully paid!");
 			}
+		}
+
+		public override string ToString()
+		{
+			return $"Amount: {Amount:C} \n" +
+				$"Rate: {Rate:C} \n" +
+				$"Installments Left: {InstallmentsLeft:C} \n" +
+				$"DateIssued: {DateIssued:C} \n" +
+				$"DateExpire: {DateExpire:C} \n" +
+				$"InstallmentsLeft: {InstallmentsLeft:C} \n" +
+				$"Days: {Days:C}";
 		}
 	}
 }

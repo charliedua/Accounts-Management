@@ -225,8 +225,9 @@ namespace Accounts
 			if (account.HasLoan)
 			{
 				Console.WriteLine("2. Pay Installments");
+				Console.WriteLine("3. Check Loan Status");
 			}
-			Console.WriteLine("3. Back");
+			Console.WriteLine("4. Back");
 		}
 
 		private static void HandleLoan(Account account)
@@ -246,11 +247,15 @@ namespace Accounts
 							account.PayInstallments();
 						break;
 					case 3:
+						if (account.HasLoan)
+							Console.WriteLine(account.AccLoan.ToString());
+						break;
+					case 4:
 						break;
 					default:
 						break;
 				}
-			} while (input != 3);
+			} while (input != 4);
 		}
 	}
 }
