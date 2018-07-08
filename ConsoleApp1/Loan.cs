@@ -144,15 +144,12 @@ namespace Bank
 			}
 		}
 
-		public override string ToString()
-		{
-			return $"Amount: {Amount:C} \n" +
-				$"Rate: {Rate:C} \n" +
-				$"Installments Left: {InstallmentsLeft:C} \n" +
-				$"DateIssued: {DateIssued:C} \n" +
-				$"DateExpire: {DateExpire:C} \n" +
-				$"InstallmentsLeft: {InstallmentsLeft:C} \n" +
-				$"Days: {Days:C}";
-		}
+		public override string ToString() => $"Amount: {Amount} \n" +
+				$"Rate: {Rate} \n" +
+				$"Installments Left: {InstallmentsLeft} \n" +
+				$"DateIssued: {DateIssued.ToLongDateString()} \n" +
+				$"DateExpire: {DateExpire.ToLongDateString()} \n" +
+				$"InstallmentsLeft: {InstallmentsLeft} \n" +
+				$"Days: {Days}\n";
 	}
 }
