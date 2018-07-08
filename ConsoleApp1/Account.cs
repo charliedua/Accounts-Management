@@ -232,7 +232,7 @@ namespace Bank
 		{
 			StringBuilder str = new StringBuilder();
 			str.AppendLine($"Name : {Name}");
-			str.AppendLine($"Balance : {Balance.ToString():C2}");
+			str.AppendLine($"Balance : {Balance.ToString():C}");
 			str.AppendLine($"Account ID : {AccountID.ToString()}");
 			return str.ToString();
 		}
@@ -274,7 +274,7 @@ namespace Bank
 		{
 			StringBuilder str = new StringBuilder();
 			str.Append(base.ToString());
-			str.Append($"Intrest : {IntrestRate:C2}");
+			str.Append($"Intrest : {IntrestRate:C}");
 			return str.ToString();
 		}
 	}
@@ -315,7 +315,7 @@ namespace Bank
 		{
 			StringBuilder str = new StringBuilder();
 			str.Append(base.ToString());
-			str.Append($"FeeCharge : {FeeChargedPerTxn:C2}");
+			str.Append($"FeeCharge : {FeeChargedPerTxn:C}");
 			return str.ToString();
 		}
 

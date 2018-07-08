@@ -168,7 +168,7 @@ namespace Accounts
 						if (accountSelected)
 						{
 							if (account is SavingsAccount savingsAccount)
-								Console.WriteLine($"{savingsAccount.CalculateIntrest():C2}");
+								Console.WriteLine($"{savingsAccount.CalculateIntrest():C}");
 						}
 						else
 							Console.WriteLine(errormsg);
