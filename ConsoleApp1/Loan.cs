@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using TerminalUserInput;
 
 namespace Bank
@@ -44,31 +45,31 @@ namespace Bank
 							InstallmentsLeft = Installments;
 							LateCharge = TUI.ReadDecimal("Please Enter the Late Charge displayed on the chart.");
 							Console.WriteLine("Loan Successfully Initiated!");
-							Console.WriteLine($"This is your balance now {account.Balance:C2}");
+							Console.WriteLine($"This is your balance now {account.Balance:C}");
 							Console.WriteLine($"The Loan is due on: {DateExpire.ToShortDateString()}");
 							result = true;
 						}
 						else
 						{
 							reason = "Low Balance";
-							Console.WriteLine($"This is your balance {account.Balance:C2}");
-							Console.WriteLine($"This is your amount {Amount:C2}");
+							Console.WriteLine($"This is your balance {account.Balance:C}");
+							Console.WriteLine($"This is your amount {Amount:C}");
 						}
 					}
 				}
 				else
 					reason = "Loan Already Issued";
-				if (!result)
+				if (!(result && reason == ""))
 					Console.WriteLine($"Loan Couldn't be processed please try again, reason: {reason}.");
 			}
 		}
 
-		public void Complete(Account account)
+		public string Complete(Account account)
 		{
 			string reason = "";
 			if (account.HasLoan)
 			{
-				if ((account.AccLoan.Days * account.AccLoan.Rate) + account.AccLoan.Amount > account.Balance)
+				if ((Days * Rate) + Amount > account.Balance)
 				{
 					account.HasLoan = false;
 					account.AccLoan = null;
@@ -83,7 +84,7 @@ namespace Bank
 			{
 				reason = "Don't have a loan";
 			}
-			Console.WriteLine($"The actions could not be performed due to the following reasons: {reason}");
+			return reason;
 		}
 
 		public void PayInstallments(Account account)
@@ -97,11 +98,11 @@ namespace Bank
 			else
 			{
 				decimal AmountToPay = InstallmentsToPay * AmountPerInstallment;
-				if (DateExpire > DateTime.Now)
+				if (DateTime.Compare(DateExpire, DateTime.Now) < 0)
 				{
-					TimeSpan TimePeriod = DateTime.Now - DateExpire;
+					TimeSpan TimePeriod = DateExpire - DateTime.Now;
 					decimal Extra = (LateCharge * (int)TimePeriod.TotalDays);
-					Console.WriteLine($"The Date of Loan has been Expired! You will have to pay {Extra:C2} extra. \n" +
+					Console.WriteLine($"The Date of Loan has been Expired! You will have to pay {Extra.ToString():C} extra." +
 						$" For late by {(int)TimePeriod.TotalDays} days.");
 					AmountToPay += Extra;
 				}
@@ -127,13 +128,28 @@ namespace Bank
 							InstallmentsLeft -= InstallmentsToPay;
 							if (InstallmentsLeft == 0)
 							{
-								Complete(account);
+								reason = Complete(account);
 							}
 						}
 					}
 				}
 			}
-			Console.WriteLine($"The action was cancelled, Reason: {reason}");
+			if (reason != "")
+			{
+				Console.WriteLine($"The action was cancelled, Reason: {reason}");
+			}
+			else
+			{
+				Console.WriteLine("Installments Successfully paid!");
+			}
 		}
+
+		public override string ToString() => $"Amount: {Amount} \n" +
+				$"Rate: {Rate} \n" +
+				$"Installments Left: {InstallmentsLeft} \n" +
+				$"DateIssued: {DateIssued.ToLongDateString()} \n" +
+				$"DateExpire: {DateExpire.ToLongDateString()} \n" +
+				$"InstallmentsLeft: {InstallmentsLeft} \n" +
+				$"Days: {Days}\n";
 	}
 }
