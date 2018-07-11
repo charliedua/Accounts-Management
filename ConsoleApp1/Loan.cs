@@ -6,6 +6,7 @@ namespace Bank
 {
 	public class Loan
 	{
+		// Core Properties
 		public decimal Amount { get; set; }
 		public int Days { get; set; }
 		public decimal Rate { get; set; }
@@ -14,26 +15,32 @@ namespace Bank
 		public int Installments { get; set; }
 		public decimal AmountPerInstallment { get; set; }
 		public int InstallmentsLeft { get; set; }
+		
 		// per day
 		public decimal LateCharge { get; set; }
 
+		// Processes The loan
 		// returns the status after processsing
 		public void Process(Account account)
 		{
 			{
 				bool result = false;
 				string reason = "";
+				
+				// Checks if the account already has a loan.
 				if (!account.HasLoan)
 				{
-
+					// Verification Check
 					if (!(TUI.ReadInteger("Please Enter Your unique accountID for verification: ") == account.AccountID))
 					{
 						reason = "Verification Error";
 					}
 					else
 					{
+						// Checks the initial Balance Before Giving Loan.
 						if (account.Balance > Amount)
 						{
+							// Asks For all the details
 							Amount = TUI.ReadDecimal("Please Enter What amount of loan would you like : ");
 							Days = TUI.ReadInteger("For How many Days: ");
 							Rate = TUI.ReadInteger("The intrest rate from the chart: ");
@@ -64,11 +71,15 @@ namespace Bank
 			}
 		}
 
+		// Pays of the loan (No Questions Asked, Errors can be caused)
 		public string Complete(Account account)
 		{
 			string reason = "";
+
+			// Checks if the account has loan or not
 			if (account.HasLoan)
 			{
+				// Checks if the owner is capable of paying the loan
 				if ((Days * Rate) + Amount > account.Balance)
 				{
 					account.HasLoan = false;
@@ -87,17 +98,20 @@ namespace Bank
 			return reason;
 		}
 
+		// Pays Specific number of installments
 		public void PayInstallments(Account account)
 		{
 			int InstallmentsToPay = TUI.ReadInteger("How many installments would you like to pay? ");
 			string reason = "";
+			
+			// Checking if you pay more than installments present
 			if (InstallmentsToPay > InstallmentsLeft && InstallmentsToPay > Installments)
-			{
 				reason = "Installments out of Bound. (More to pay than available)";
-			}
 			else
 			{
 				decimal AmountToPay = InstallmentsToPay * AmountPerInstallment;
+
+				// Checks for the expiry and adds extra ammount to initial
 				if (DateTime.Compare(DateExpire, DateTime.Now) < 0)
 				{
 					TimeSpan TimePeriod = DateExpire - DateTime.Now;
@@ -106,18 +120,22 @@ namespace Bank
 						$" For late by {(int)TimePeriod.TotalDays} days.");
 					AmountToPay += Extra;
 				}
+
+				// Checks if the owner is capable of paying the amount
 				if (AmountToPay > account.Balance)
 				{
 					reason = "Insufficient Balance.";
 				}
 				else
 				{
+					// Verification Check
 					if (!(TUI.ReadInteger("Please Enter Your unique accountID for verification: ") == account.AccountID))
 					{
 						reason = "Verification Error";
 					}
 					else
 					{
+						// Gives a Chance to quit
 						if (!TUI.ReadBool("Do You want to Continue?"))
 						{
 							reason = "Terminated by User";
@@ -144,6 +162,7 @@ namespace Bank
 			}
 		}
 
+		// Gernal Override
 		public override string ToString() => $"Amount: {Amount} \n" +
 				$"Rate: {Rate} \n" +
 				$"Installments Left: {InstallmentsLeft} \n" +
