@@ -12,6 +12,7 @@ namespace Bank
 {
 	public class Account
 	{
+		// Core Account Thingies
 		public int AccountID { get; set; }
 
 		private string _Name;
@@ -33,9 +34,6 @@ namespace Bank
 		}
 
 		private decimal _Balance;
-		public bool HasLoan { get; set; }
-		public Loan AccLoan { get; set; }
-
 		public decimal Balance
 		{
 			get => _Balance;
@@ -54,11 +52,17 @@ namespace Bank
 			}
 		}
 
+		// Loan Thingies
+		public bool HasLoan { get; set; }
+		public Loan AccLoan { get; set; }
+
+		// Genrates the instance which is empty
 		public Account()
 		{
 			;
 		}
-
+		
+		// Creator
 		public virtual void Create(int account_id)
 		{
 			Console.WriteLine("Please enter your name");
@@ -71,6 +75,7 @@ namespace Bank
 			Console.Clear();
 		}
 
+		// Core Functionality of account
 		public void Deposit(decimal depositAmount)
 		{
 			if (depositAmount > 0.0m)
@@ -98,6 +103,7 @@ namespace Bank
 			}
 		}
 
+		// Save to a File
 		public static void Save(List<Account> accounts, string path)
 		{
 			using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -172,6 +178,7 @@ namespace Bank
 			}
 		}
 
+		// Load From a file
 		public static List<Account> Load()
 		{
 			List<Account> accounts = new List<Account>();
@@ -228,6 +235,7 @@ namespace Bank
 			return accounts;
 		}
 
+		// Basic Overrides
 		public override string ToString()
 		{
 			StringBuilder str = new StringBuilder();
@@ -237,6 +245,7 @@ namespace Bank
 			return str.ToString();
 		}
 
+		// Core Loan functionality
 		public void InitiateLoan()
 		{
 			AccLoan = new Loan();
@@ -247,17 +256,17 @@ namespace Bank
 		{
 			AccLoan.PayInstallments(this);
 		}
-
 	}
 
 	class SavingsAccount: Account
-	{
+	{ 
 		public decimal IntrestRate { get; set; }
 		public SavingsAccount() : base()
 		{
 			;
 		}
 
+		// overrides
 		public override void Create(int account_id)
 		{
 			Balance = TUI.ReadDecimal("Please Enter the initial Balance.");
@@ -265,11 +274,13 @@ namespace Bank
 			base.Create(account_id);
 		}
 
+		// core functionality
 		public decimal CalculateIntrest()
 		{
 			return Balance * IntrestRate;
 		}
 
+		// gernal overrides
 		public override string ToString()
 		{
 			StringBuilder str = new StringBuilder();
@@ -281,24 +292,22 @@ namespace Bank
 
 	class CheckingAccount : Account
 	{
+		// Core members
 		public decimal FeeChargedPerTxn { get; set; }
+
+		// Main Constructor
 		public CheckingAccount() : base()
 		{
 			;
 		}
 
+		// Overrides
 		public override void Create(int account_id)
 		{
 			Balance = TUI.ReadDecimal("Please Enter the initial Balance.");
 			FeeChargedPerTxn = TUI.ReadDecimal("Please Enter the Fee Charged Per Transaction");
 			base.Create(account_id);
 		}
-
-		public new void Deposit(decimal depositAmount)
-		{
-			base.Deposit(depositAmount - FeeChargedPerTxn);
-		}
-
 		public new void Widraw(decimal amount)
 		{
 			if (amount > Balance)
@@ -310,7 +319,12 @@ namespace Bank
 				base.Widraw(amount);
 			}
 		}
+		public new void Deposit(decimal depositAmount)
+		{
+			base.Deposit(depositAmount - FeeChargedPerTxn);
+		}
 
+		// gernal overrides
 		public override string ToString()
 		{
 			StringBuilder str = new StringBuilder();
@@ -318,6 +332,5 @@ namespace Bank
 			str.Append($"FeeCharge : {FeeChargedPerTxn:C}");
 			return str.ToString();
 		}
-
 	}
 }
