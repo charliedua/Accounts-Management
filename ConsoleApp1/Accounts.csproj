@@ -76,6 +76,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\Documents\accountinfo.dat">
       <Link>accountinfo.dat</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
