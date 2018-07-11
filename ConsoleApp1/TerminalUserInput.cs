@@ -24,7 +24,7 @@ namespace TerminalUserInput
 			bool condition;
 			do
 			{
-				input = ReadInteger(prompt + errMsg);
+				input = ReadInteger(prompt + errMsg+ " >");
 				condition = (min < input) && (input < max);
 				if (!condition)
 				{
