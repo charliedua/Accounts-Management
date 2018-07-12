@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using TerminalUserInput;
 
 namespace Bank
 {
@@ -61,7 +60,7 @@ namespace Bank
 		{
 			;
 		}
-		
+
 		// Creator
 		public virtual void Create(int account_id)
 		{
@@ -255,82 +254,6 @@ namespace Bank
 		public void PayInstallments()
 		{
 			AccLoan.PayInstallments(this);
-		}
-	}
-
-	class SavingsAccount: Account
-	{ 
-		public decimal IntrestRate { get; set; }
-		public SavingsAccount() : base()
-		{
-			;
-		}
-
-		// overrides
-		public override void Create(int account_id)
-		{
-			Balance = TUI.ReadDecimal("Please Enter the initial Balance.");
-			IntrestRate = TUI.ReadDecimal("Please Enter the intrest Rate");
-			base.Create(account_id);
-		}
-
-		// core functionality
-		public decimal CalculateIntrest()
-		{
-			return Balance * IntrestRate;
-		}
-
-		// gernal overrides
-		public override string ToString()
-		{
-			StringBuilder str = new StringBuilder();
-			str.Append(base.ToString());
-			str.Append($"Intrest : {IntrestRate:C}");
-			return str.ToString();
-		}
-	}
-
-	class CheckingAccount : Account
-	{
-		// Core members
-		public decimal FeeChargedPerTxn { get; set; }
-
-		// Main Constructor
-		public CheckingAccount() : base()
-		{
-			;
-		}
-
-		// Overrides
-		public override void Create(int account_id)
-		{
-			Balance = TUI.ReadDecimal("Please Enter the initial Balance.");
-			FeeChargedPerTxn = TUI.ReadDecimal("Please Enter the Fee Charged Per Transaction");
-			base.Create(account_id);
-		}
-		public new void Widraw(decimal amount)
-		{
-			if (amount > Balance)
-			{
-				base.Widraw(amount + FeeChargedPerTxn);
-			}
-			else
-			{
-				base.Widraw(amount);
-			}
-		}
-		public new void Deposit(decimal depositAmount)
-		{
-			base.Deposit(depositAmount - FeeChargedPerTxn);
-		}
-
-		// gernal overrides
-		public override string ToString()
-		{
-			StringBuilder str = new StringBuilder();
-			str.Append(base.ToString());
-			str.Append($"FeeCharge : {FeeChargedPerTxn:C}");
-			return str.ToString();
 		}
 	}
 }
